@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
-import '../styles/navbar.css'
+import '../styles/navbar.scss'
 
 const Navbar: React.FC = () => {
   //auth0 stuff
@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link to="/" className="navbar-brand font-weight-bold">
-        Simply<span style={{ color: '#17A2B8' }}>Invoice</span>
+        Simply<span className="info-color-span">Invoice</span>
       </Link>
 
       <button
@@ -42,8 +42,7 @@ const Navbar: React.FC = () => {
         ) : null}
 
         <button
-          className="nav-link btn btn-info"
-          style={{ cursor: 'pointer', marginRight: '40px' }}
+          className="login-btn nav-link btn btn-info"
           onClick={
             isAuthenticated
               ? () => logout({ returnTo: window.location.origin })

@@ -1,11 +1,11 @@
 import React, { useRef, useContext, useEffect, useState } from 'react'
-import { Invoice, lineItems, UserInfoInterface } from '../interfaces'
+import { Invoice, lineItems } from '../interfaces'
 import { downloadInvoice } from '../html2pdf'
 import { Link, useParams } from 'react-router-dom'
 import { AppContext } from '../Context'
 import { FiPhoneCall, FiMail } from 'react-icons/fi'
 import { FaDownload } from 'react-icons/fa'
-import '../styles/invoiceTemplate.css'
+import '../styles/invoiceTemplate.scss'
 
 export function InvoiceTemplate() {
   const { invoices, userInfo: { email = '', mobile = '' } = {} } =
@@ -152,7 +152,7 @@ export function InvoiceTemplate() {
             <pre>{notes}</pre>
           </div>
           <hr />
-          <div>
+          <div className="invoice-footer">
             <p className="text-center ">
               <strong>THANK YOU {billTo}!</strong>
             </p>

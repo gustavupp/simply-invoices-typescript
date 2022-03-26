@@ -1,10 +1,9 @@
 :root {
   --dark: #343a40;
   --dark-background: #25292c;
-
   --main-color: #6c56e1;
   --primary-color: #ecf7f9;
-  --secondary-color: #212121;
+  --sencondary-color: #212121;
   --nav-color: #6c56e1;
   --nav-text-color: #edf2fc;
   --hover-color: #c0b4cf;
@@ -16,6 +15,11 @@
   --primary-color: #edf2fc;
   --nav-color: #6c56e1;
   --nav-text-color: #edf2fc;
+}
+
+.dark-mode body {
+  background: var(--sencondary-color);
+  color: var(--primary-color);
 }
 
 * {

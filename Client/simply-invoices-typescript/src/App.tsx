@@ -10,7 +10,6 @@ import { useEffect, useContext } from 'react'
 import { AppContext } from './Context'
 import PrivateRoute from './pages/PrivateRoute'
 import { UserInfoInterface } from './interfaces'
-import UserInfo from './components/UserInfo'
 
 function App() {
   const { addUserToContext, getInvoices, checkIfUserExists, addUserToDb } =

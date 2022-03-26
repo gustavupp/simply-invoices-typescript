@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './styles/index.css'
+import './styles/index.scss'
 import App from './App'
 import { AppProvider } from './Context'
 import { Auth0Provider } from '@auth0/auth0-react'
