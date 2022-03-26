@@ -17,7 +17,7 @@ const Pagination: React.FC = () => {
   const handleClick = (index: number) => {
     if (index === currentPage) return
     setIsPaginationLoading(true)
-    if (index > amountOfPages && userId) {
+    if (userId) {
       return getInvoices(userId, index).then(() => setCurrentPage(index))
     }
   }

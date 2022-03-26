@@ -1,13 +1,7 @@
 import React, { useReducer } from 'react'
 import { reducer } from './reducer'
 //interfaces
-import {
-  Invoice,
-  UserInfoInterface,
-  lineItems,
-  StateInterface,
-} from './interfaces'
-import { User } from '@auth0/auth0-react'
+import { UserInfoInterface, lineItems, StateInterface } from './interfaces'
 
 interface ProviderProp {
   children: React.ReactNode
@@ -306,7 +300,7 @@ const AppProvider = ({ children }: ProviderProp) => {
     try {
       const response = await fetch(`http://localhost:3001/api/user/${userId}`)
       const data = await response.json()
-      dispatch({ type: 'ADD_USER_INFO', payload: data })
+      dispatch({ type: 'ADD_USER_INFO', payload: data[0] })
       setIsUserSettingsLoading(false)
     } catch (error) {
       throw error

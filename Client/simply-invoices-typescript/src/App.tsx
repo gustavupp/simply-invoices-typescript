@@ -24,7 +24,6 @@ function App() {
     if (userId) {
       checkIfUserExists(userId).then((data: UserInfoInterface) => {
         if (Object.keys(data).length === 0) {
-          console.log({ data, userId })
           addUserToDb(email, userId)
             .then(() => checkIfUserExists(userId))
             .then((data: UserInfoInterface) => {
@@ -32,7 +31,6 @@ function App() {
               getInvoices(userId)
             })
         } else {
-          console.log({ data, userId })
           addUserToContext(data)
           getInvoices(userId)
         }

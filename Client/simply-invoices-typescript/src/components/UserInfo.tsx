@@ -6,19 +6,10 @@ import Loading from './Loading'
 const UserInfo: React.FC = () => {
   const navigate = useNavigate()
   const {
-    userInfo: {
-      email = '',
-      mobile = '',
-      notes = '',
-      paymentDetails = '',
-      signUpDate = '',
-      userId = '',
-    },
-
+    userInfo: { email, mobile, notes, paymentDetails, signUpDate, userId },
     updateUserSettings,
     isUserSettingsLoading,
   } = useContext(AppContext)
-
   const [id, setId] = useState(userId)
   const [userEmail, setUserEmail] = useState(email)
   const [userMobile, setUserMobile] = useState(mobile)
@@ -27,6 +18,7 @@ const UserInfo: React.FC = () => {
   const [userNotes, setUserNotes] = useState(notes)
 
   useEffect(() => {
+    console.log({ email, mobile, notes, paymentDetails, signUpDate, userId })
     setId(userId)
     setUserEmail(email)
     setUserMobile(mobile)
