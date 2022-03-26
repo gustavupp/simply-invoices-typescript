@@ -1,4 +1,20 @@
-export const reducer = (state, action) => {
+import { Invoice, UserInfoInterface, StateInterface } from './interfaces'
+
+type Action =
+  | { type: 'SET_IS_PAGINATION_LOADING'; payload: boolean }
+  | { type: 'SET_CURRENT_PAGE_INDEX'; payload: number }
+  | { type: 'SET_IS_INVOICE_LOADING'; payload: boolean }
+  | { type: 'SET_IS_EDITING_INVOICE'; payload: boolean }
+  | {
+      type: 'SET_TOTALS'
+      payload: { globalTotal: number; fiscalYearTotal: number }
+    }
+  | { type: 'SET_AMOUNT_OF_PAGES'; payload: number }
+  | { type: 'SET_INVOICES'; payload: Invoice[] }
+  | { type: 'ADD_USER_INFO'; payload: UserInfoInterface }
+  | { type: 'SET_IS_USER_SETTINGS_LOADING'; payload: boolean }
+
+export const reducer = (state: any, action: Action) => {
   switch (action.type) {
     case 'SET_INVOICES':
       return { ...state, invoices: action.payload }

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/loading.css'
 
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
     <div className="loading-component-div">
       <div className="loading-animation"></div>

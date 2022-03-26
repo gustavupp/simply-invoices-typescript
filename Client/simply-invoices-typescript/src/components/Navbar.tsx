@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import '../styles/navbar.css'
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   //auth0 stuff
   const { logout, loginWithRedirect, isAuthenticated } = useAuth0()
 

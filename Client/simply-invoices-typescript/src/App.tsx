@@ -9,6 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useContext } from 'react'
 import { AppContext } from './Context'
 import PrivateRoute from './pages/PrivateRoute'
+import { UserInfoInterface } from './interfaces'
+import UserInfo from './components/UserInfo'
 
 function App() {
   const { addUserToContext, getInvoices, checkIfUserExists, addUserToDb } =
@@ -20,12 +22,12 @@ function App() {
   //chech the database for the user id, if not in the database, add the user.
   useEffect(() => {
     if (userId) {
-      checkIfUserExists(userId).then((data) => {
-        if (data.length === 0) {
+      checkIfUserExists(userId).then((data: UserInfoInterface) => {
+        if (Object.keys(data).length === 0) {
           console.log({ data, userId })
           addUserToDb(email, userId)
             .then(() => checkIfUserExists(userId))
-            .then((data) => {
+            .then((data: UserInfoInterface) => {
               addUserToContext(data)
               getInvoices(userId)
             })

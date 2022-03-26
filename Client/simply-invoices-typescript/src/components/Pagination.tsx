@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AppContext } from '../Context'
 import { useAuth0 } from '@auth0/auth0-react'
 
-const Pagination = () => {
+const Pagination: React.FC = () => {
   //auth0 stuff. Grab userId from auth0
   const { user: { sub: userId } = {} } = useAuth0()
   const {
@@ -14,11 +14,12 @@ const Pagination = () => {
   } = useContext(AppContext)
 
   //pagination logic
-  const handleClick = (index) => {
+  const handleClick = (index: number) => {
     if (index === currentPage) return
     setIsPaginationLoading(true)
-    if (index > amountOfPages) return
-    getInvoices(userId, index).then(() => setCurrentPage(index))
+    if (index > amountOfPages && userId) {
+      return getInvoices(userId, index).then(() => setCurrentPage(index))
+    }
   }
 
   return (
@@ -33,7 +34,7 @@ const Pagination = () => {
               currentPage + 1 > 1 ? handleClick(currentPage - 1) : null
             }
           >
-            <button className="page-link" href="#" aria-label="Previous">
+            <button className="page-link" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               <span className="sr-only">Previous</span>
             </button>
@@ -68,7 +69,7 @@ const Pagination = () => {
                 : null
             }
           >
-            <button className="page-link" href="#" aria-label="Next">
+            <button className="page-link" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
               <span className="sr-only">Next</span>
             </button>

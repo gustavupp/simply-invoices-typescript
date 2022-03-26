@@ -1,11 +1,15 @@
 import React, { useContext, useRef, useState, useEffect } from 'react'
-import { AppContext } from '../Context'
+//interfaces
+import { lineItems } from '../interfaces'
+//components
 import Loading from './Loading'
+import { AppContext } from '../Context'
+//libraries
 import { AiOutlineClose, AiFillEdit } from 'react-icons/ai'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
-export const NewInvoice = () => {
+export const NewInvoice: React.FC = () => {
   //const [theme, setTheme] = useState('info')
   //auth0 stuff. Grab userId from auth0
   const { user: { sub: userId } = {} } = useAuth0()
@@ -20,32 +24,37 @@ export const NewInvoice = () => {
     setIsInvoiceLoading,
     isInvoiceLoading,
     setIsEditingInvoice,
-    userInfo: [{ notes: userNotes, paymentDetails: userPaymentDetails } = {}],
+    userInfo: {
+      notes: userNotes = '',
+      paymentDetails: userPaymentDetails = '',
+    } = {},
   } = useContext(AppContext)
 
-  const { invoiceId } = useParams()
+  let { invoiceId } = useParams()
   const imageOutput = useRef(null)
 
-  const [subtotal, setSubtotal] = useState(0)
-  const [invoiceNumber, setInvoiceNumber] = useState('')
-  const [invoiceFrom, setInvoiceFrom] = useState('')
-  const [billTo, setBillTo] = useState('')
-  const [date, setDate] = useState('')
-  const [image, setImage] = useState(null)
-  const [lineItems, setLineItems] = useState([])
-  const [imageThumbnail, setImageThumbnail] = useState(
+  const [subtotal, setSubtotal] = useState<number>(0)
+  const [invoiceNumber, setInvoiceNumber] = useState<number>(0)
+  const [invoiceFrom, setInvoiceFrom] = useState<string>('')
+  const [billTo, setBillTo] = useState<string>('')
+  const [date, setDate] = useState<string>('')
+  const [image, setImage] = useState<any>(null)
+  const [lineItems, setLineItems] = useState<lineItems[]>([])
+  const [imageThumbnail, setImageThumbnail] = useState<string>(
     'https://socialimpact.com/wp-content/uploads/2021/03/logo-placeholder-300x210.jpg'
   )
-  const [paymentDetails, setPaymentDetails] = useState('')
-  const [notes, setNotes] = useState('')
+  const [paymentDetails, setPaymentDetails] = useState<string>('')
+  const [notes, setNotes] = useState<string>('')
 
-  const [lineItemTotal, setLineItemTotal] = useState(0)
-  const [service, setService] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [rate, setRate] = useState('')
+  const [lineItemTotal, setLineItemTotal] = useState<number>(0)
+  const [service, setService] = useState<string>('')
+  const [quantity, setQuantity] = useState<number>(0)
+  const [rate, setRate] = useState<number>(0)
 
-  const [editingLineItemId, setEditingLineItemId] = useState('')
-  const [isEditingLineItem, setIsEditingLineItem] = useState(false)
+  const [editingLineItemId, setEditingLineItemId] = useState<
+    number | null | string
+  >('')
+  const [isEditingLineItem, setIsEditingLineItem] = useState<boolean>(false)
 
   //when component loads and the invoices array is not empty, look for the given id in the array and populate the fields
   useEffect(() => {
@@ -61,7 +70,9 @@ export const NewInvoice = () => {
         lineItems,
         paymentDetails,
         notes,
-      } = invoices.find((item) => item.invoiceId === parseInt(invoiceId))
+      } = invoices.find((item: { invoiceId: number }) => {
+        if (invoiceId) return item.invoiceId === parseInt(invoiceId)
+      })
       setSubtotal(subtotal)
       setInvoiceFrom(invoiceFrom)
       setBillTo(billTo)
@@ -95,13 +106,15 @@ export const NewInvoice = () => {
 
   //updates line item total
   useEffect(() => {
-    setLineItemTotal(rate * quantity)
+    if (rate) {
+      setLineItemTotal(rate * quantity)
+    }
   }, [rate, quantity])
 
   //adds a line item
   const addLineItem = () => {
-    if (isEditingLineItem) {
-      let updatedItemList = lineItems.map((item) => {
+    if (isEditingLineItem && lineItems) {
+      let updatedItemList: lineItems[] = lineItems.map((item) => {
         if (item.id === editingLineItemId) {
           item.service = service
           item.rate = rate
@@ -112,47 +125,64 @@ export const NewInvoice = () => {
       })
       setLineItems(updatedItemList)
     } else if (quantity && rate) {
-      let newItem = {
+      let newItem: lineItems = {
         id: Date.now(),
         service,
         quantity,
         rate,
         lineItemTotal,
       }
-      setLineItems([...lineItems, newItem])
+      setLineItems(lineItems && [...lineItems, newItem])
     }
     //reset fields
-    setQuantity('')
-    setRate('')
+    setQuantity(0)
+    setRate(0)
     setLineItemTotal(0)
     setService('')
     setIsEditingLineItem(false)
   }
 
   //deletes a line item
-  const deleteLineItem = (e, id) => {
+  const deleteLineItem = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: any
+  ) => {
     e.preventDefault()
-    let tempLineItems = lineItems.filter((item) => item.id !== id)
-    setLineItems(tempLineItems)
+    if (lineItems) {
+      let tempLineItems: lineItems[] = lineItems.filter(
+        (item) => item.id !== id
+      )
+      setLineItems(tempLineItems)
+    }
   }
 
   //edits a line item
-  const editLineItem = (e, id) => {
+  const editLineItem = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: any
+  ) => {
     e.preventDefault()
-    let editingLineItem = lineItems.find((item) => item.id === id)
-
-    setRate(editingLineItem.rate)
-    setQuantity(editingLineItem.quantity)
-    setService(editingLineItem.service)
-    setLineItemTotal(editingLineItem.lineItemTotal)
-    setEditingLineItemId(editingLineItem.id)
-    setIsEditingLineItem(true)
+    if (lineItems) {
+      let editingLineItem: lineItems | undefined = lineItems.find(
+        (item) => item.id === id
+      )
+      if (editingLineItem) {
+        setRate(editingLineItem.rate)
+        setQuantity(editingLineItem.quantity)
+        setService(editingLineItem.service)
+        setLineItemTotal(editingLineItem.lineItemTotal)
+        setEditingLineItemId(editingLineItem.id)
+        setIsEditingLineItem(true)
+      }
+    }
   }
 
   //loads image preview
-  const loadImageFile = (e) => {
-    setImageThumbnail(URL.createObjectURL(e.target.files[0]))
-    setImage(e.target.files[0])
+  const loadImageFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.files !== null) {
+      setImageThumbnail(URL.createObjectURL(e.target.files[0]))
+      setImage(e.target.files[0])
+    }
   }
 
   if (isInvoiceLoading) return <Loading />
@@ -164,16 +194,16 @@ export const NewInvoice = () => {
       !invoiceNumber ||
       !billTo ||
       !date ||
-      !lineItems.length > 0
+      lineItems.length === 0
     )
       return alert('Please, fill the required fields')
 
     //otherwise proceed
-    if (isEditingInvoice) {
+    if (isEditingInvoice && userId && invoiceId) {
       setIsInvoiceLoading(true)
       updateInvoice(
         userId,
-        invoiceId,
+        parseInt(invoiceId),
         invoiceFrom,
         billTo,
         invoiceNumber,
@@ -184,7 +214,7 @@ export const NewInvoice = () => {
         paymentDetails,
         notes
       ).then(() => navigate('/'))
-    } else {
+    } else if (userId) {
       setIsInvoiceLoading(true)
       postInvoiceToServer(
         invoiceFrom,
@@ -216,10 +246,10 @@ export const NewInvoice = () => {
                 name="image"
                 className="custom-file-input"
                 id="file"
-                onChange={loadImageFile}
+                onChange={(e) => loadImageFile(e)}
               />
 
-              <label name="image" className="custom-file-label" htmlFor="file">
+              <label className="custom-file-label" htmlFor="file">
                 Choose Logo Image
               </label>
             </div>
@@ -236,7 +266,7 @@ export const NewInvoice = () => {
                 : imageThumbnail
             }
             alt="invoice logo"
-            width="180"
+            width="150px"
             style={{ borderRadius: '10px' }}
             ref={imageOutput}
           />
@@ -276,7 +306,7 @@ export const NewInvoice = () => {
                 id="number"
                 name="invoiceNumber"
                 value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
+                onChange={(e) => setInvoiceNumber(parseFloat(e.target.value))}
                 placeholder="#1"
               />
             </div>
@@ -332,7 +362,7 @@ export const NewInvoice = () => {
                     type="number"
                     name="quantity"
                     value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => setQuantity(parseFloat(e.target.value))}
                     placeholder=" Quantity"
                   />
                 </td>
@@ -342,7 +372,7 @@ export const NewInvoice = () => {
                     type="number"
                     name="rate"
                     value={rate}
-                    onChange={(e) => setRate(e.target.value)}
+                    onChange={(e) => setRate(parseFloat(e.target.value))}
                     placeholder=" $"
                   />
                 </td>
@@ -397,7 +427,7 @@ export const NewInvoice = () => {
               className="form-control"
               id="paymentDetails"
               name="paymentDetails"
-              rows="4"
+              rows={4}
               value={paymentDetails ? paymentDetails : ''} //when empty its value comes back as null from the db and react complains. had to add this ternary to fix that.
               onChange={(e) => setPaymentDetails(e.target.value)}
               placeholder="Any payment details?"
@@ -411,7 +441,7 @@ export const NewInvoice = () => {
                 className="form-control"
                 name="notes"
                 id="notes"
-                rows="4"
+                rows={4}
                 value={notes ? notes : ''} //when empty its value comes back as null from the db and react complains. had to add this ternary to fix that.
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Any notes?"
@@ -433,9 +463,13 @@ export const NewInvoice = () => {
 
         <button
           className="btn btn-danger"
-          onClick={() =>
-            deleteInvoice(invoiceId, userId).then(() => navigate('/'))
-          }
+          onClick={() => {
+            if (invoiceId && userId) {
+              deleteInvoice(parseInt(invoiceId), userId).then(() =>
+                navigate('/')
+              )
+            }
+          }}
         >
           Delete
         </button>

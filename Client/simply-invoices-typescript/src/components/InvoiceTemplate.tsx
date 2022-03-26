@@ -1,4 +1,6 @@
 import React, { useRef, useContext, useEffect, useState } from 'react'
+import { Invoice, lineItems, UserInfoInterface } from '../interfaces'
+import { downloadInvoice } from '../html2pdf'
 import { Link, useParams } from 'react-router-dom'
 import { AppContext } from '../Context'
 import { FiPhoneCall, FiMail } from 'react-icons/fi'
@@ -6,19 +8,17 @@ import { FaDownload } from 'react-icons/fa'
 import '../styles/invoiceTemplate.css'
 
 export function InvoiceTemplate() {
-  const {
-    invoices,
-    userInfo: [{ email = '', mobile = '' } = {}],
-  } = useContext(AppContext)
-  const [subtotal, setSubtotal] = useState('')
-  const [invoiceFrom, setInvoiceFrom] = useState('')
-  const [billTo, setBillTo] = useState('')
-  const [date, setDate] = useState('')
-  const [invoiceNumber, setInvoiceNumber] = useState('')
-  const [image, setImage] = useState('')
-  const [lineItems, setLineItems] = useState('')
-  const [paymentDetails, setPaymentDetails] = useState('')
-  const [notes, setNotes] = useState('')
+  const { invoices, userInfo: { email = '', mobile = '' } = {} } =
+    useContext(AppContext)
+  const [subtotal, setSubtotal] = useState<number | undefined>(0)
+  const [invoiceFrom, setInvoiceFrom] = useState<string>('')
+  const [billTo, setBillTo] = useState<string>('')
+  const [date, setDate] = useState<string>('')
+  const [invoiceNumber, setInvoiceNumber] = useState<number>(0)
+  const [image, setImage] = useState<any>(null)
+  const [lineItems, setLineItems] = useState<lineItems[]>([])
+  const [paymentDetails, setPaymentDetails] = useState<string>('')
+  const [notes, setNotes] = useState<string>('')
 
   const invoice = useRef(null)
   const { invoiceId } = useParams()
@@ -36,29 +36,20 @@ export function InvoiceTemplate() {
         lineItems,
         paymentDetails,
         notes,
-      } = invoices.find((item) => item.invoiceId === parseInt(invoiceId))
+      } = invoices.find(
+        (item: Invoice) => item.invoiceId === parseInt(invoiceId)
+      )
       setSubtotal(subtotal)
       setInvoiceFrom(invoiceFrom)
       setBillTo(billTo)
       setDate(date)
       setInvoiceNumber(invoiceNumber)
       setImage(image)
-      setLineItems(JSON.parse(lineItems))
+      setLineItems(lineItems)
       setPaymentDetails(paymentDetails)
       setNotes(notes)
     }
   }, [invoiceId, invoices])
-
-  const downloadInvoice = () => {
-    let opt = {
-      margin: 0,
-      filename: `invoice-${invoiceNumber}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { dpi: 192, scale: 4, letterRendering: true, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    }
-    window.html2pdf(invoice.current, opt)
-  }
 
   return (
     <main className="container my-5">
@@ -69,7 +60,7 @@ export function InvoiceTemplate() {
               <img
                 src={`https://simply-invoice-app.herokuapp.com/${image}`}
                 alt="logo"
-                width="250px"
+                style={{ width: '150px', borderRadius: '10px' }}
               />
             ) : null}
           </div>
@@ -100,13 +91,13 @@ export function InvoiceTemplate() {
                 <thead>
                   <tr>
                     <th>PRODUCT / SERVICE</th>
-                    <th className="text-center" width="10%">
+                    <th className="text-center" style={{ width: '10%' }}>
                       RATE
                     </th>
-                    <th className="text-center" width="10%">
+                    <th className="text-center" style={{ width: '10%' }}>
                       HOURS
                     </th>
-                    <th className="text-right" width="20%">
+                    <th className="text-right" style={{ width: '20%' }}>
                       LINE TOTAL
                     </th>
                   </tr>
@@ -114,7 +105,7 @@ export function InvoiceTemplate() {
                 <tbody>
                   {lineItems
                     ? React.Children.toArray(
-                        lineItems.map((item) => {
+                        lineItems.map((item: lineItems) => {
                           const { service, rate, quantity, lineItemTotal } =
                             item
                           return (
@@ -175,7 +166,10 @@ export function InvoiceTemplate() {
           <Link to="/" className="btn btn-secondary mx-2">
             Back
           </Link>
-          <button className="btn btn-info mx-2" onClick={downloadInvoice}>
+          <button
+            className="btn btn-info mx-2"
+            onClick={() => downloadInvoice(invoiceNumber, invoice.current)}
+          >
             <FaDownload /> Download
           </button>
         </div>

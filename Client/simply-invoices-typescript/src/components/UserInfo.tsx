@@ -3,19 +3,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../Context'
 import Loading from './Loading'
 
-const UserInfo = () => {
+const UserInfo: React.FC = () => {
   const navigate = useNavigate()
   const {
-    userInfo: [
-      {
-        email = '',
-        mobile = '',
-        notes = '',
-        paymentDetails = '',
-        signUpDate = '',
-        userId = '',
-      } = {},
-    ],
+    userInfo: {
+      email = '',
+      mobile = '',
+      notes = '',
+      paymentDetails = '',
+      signUpDate = '',
+      userId = '',
+    },
+
     updateUserSettings,
     isUserSettingsLoading,
   } = useContext(AppContext)
@@ -105,7 +104,7 @@ const UserInfo = () => {
               name="paymentDetails"
               value={userPaymentDetails}
               onChange={(e) => setUserPaymentDetails(e.target.value)}
-              rows="4"
+              rows={4}
               placeholder="Any payment details?"
             />
           </div>
@@ -119,7 +118,7 @@ const UserInfo = () => {
                 id="notes"
                 value={userNotes}
                 onChange={(e) => setUserNotes(e.target.value)}
-                rows="4"
+                rows={4}
                 placeholder="Any notes?"
               />
             </div>

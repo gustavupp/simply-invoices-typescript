@@ -223,10 +223,17 @@ const getInvoices = (req, res) => {
 
           //add fiscaYearTotal do the result
           result[3] = fiscalYearTotal
+
           //add global total to the result
           result[2] = globalTotal
+
           //divide the number of entries by the limit per page to send the number of pages to the frontend
           result[0][0].count = Math.ceil(result[0][0].count / limit)
+
+          //parse lineItems back to json before sending data to frontend
+          result[1].forEach((item) => {
+            item.lineItems = JSON.parse(item.lineItems)
+          })
           res.send(result)
         }
       }

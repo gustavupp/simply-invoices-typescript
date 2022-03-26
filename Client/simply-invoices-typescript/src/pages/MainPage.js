@@ -42,7 +42,7 @@ const MainPage = () => {
         <table
           style={{ borderRadius: '10px' }}
           // className={`table table-invoice table-${theme}`}
-          className="table table-invoice table-info"
+          className="table table-sm table-invoice table-info"
         >
           <thead className="thead-dark">
             <tr>
@@ -70,7 +70,7 @@ const MainPage = () => {
           <table
             style={{ borderRadius: '10px' }}
             //className={`table table-invoice table-${theme}`}
-            className="table table-invoice table-info"
+            className="table table-sm table-invoice table-info"
           >
             <thead className="thead-dark">
               <tr>
@@ -119,13 +119,13 @@ const MainPage = () => {
                         <td className="text-center">
                           <Link
                             to={`/invoices/${invoiceId}`}
-                            className="btn btn-primary mr-2 mb-1"
+                            className="btn btn-primary mr-2 mb-1 p-1"
                           >
                             <BiShowAlt style={{ fontSize: '22px' }} />
                           </Link>
                           <Link
                             to={`/invoice/${invoiceId}`}
-                            className="btn btn-info mr-2 mb-1"
+                            className="btn btn-info mr-2 mb-1 p-1"
                             onClick={() => setIsEditingInvoice(true)}
                           >
                             <AiFillEdit style={{ fontSize: '22px' }} />
