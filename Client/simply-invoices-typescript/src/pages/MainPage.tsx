@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import Pagination from '../components/Pagination'
 import Loading from '../components/Loading'
 
-const MainPage = () => {
+const MainPage: React.FC = (): JSX.Element => {
   const {
     invoices,
     setIsEditingInvoice,

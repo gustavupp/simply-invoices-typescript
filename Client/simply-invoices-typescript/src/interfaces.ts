@@ -43,7 +43,7 @@ export interface StateInterface {
   isUserSettingsLoading: boolean
   isPaginationLoading: boolean
   amountOfPages: number
-  totals: number
+  totals: { fiscalYearTotal: number; globalTotal: number }
   currentPage: number
   setIsEditingInvoice: (trueOrFalse: boolean) => void
   getInvoices: (userId: string, page?: number) => Promise<any>

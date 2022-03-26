@@ -22,7 +22,7 @@ const intialState: StateInterface = {
   isUserSettingsLoading: false,
   isPaginationLoading: true,
   amountOfPages: 0,
-  totals: 0,
+  totals: { fiscalYearTotal: 0, globalTotal: 0 },
   currentPage: 0,
   setIsEditingInvoice: function (trueOrFalse: boolean): void {
     throw new Error('Function not implemented.')

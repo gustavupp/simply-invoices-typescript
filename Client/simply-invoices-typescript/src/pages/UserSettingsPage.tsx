@@ -1,7 +1,7 @@
 import React from 'react'
 import UserInfo from '../components/UserInfo'
 
-const UserSettingsPage = () => {
+const UserSettingsPage: React.FC = (): JSX.Element => {
   return <UserInfo />
 }
 
