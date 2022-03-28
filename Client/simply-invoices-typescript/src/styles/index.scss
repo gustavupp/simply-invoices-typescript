@@ -17,9 +17,10 @@
   --nav-text-color: #edf2fc;
 }
 
-.dark-mode body {
-  background: var(--sencondary-color);
-  color: var(--primary-color);
+//later implementation
+.dark-mode {
+  --primary-color: #212121;
+  --secondary-color: #edf2fc;
 }
 
 * {
