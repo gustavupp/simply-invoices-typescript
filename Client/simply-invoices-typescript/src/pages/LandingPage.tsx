@@ -10,7 +10,7 @@ const LandingPage = () => {
     <main className="wrapper container row text-center mx-auto py-5 align-items-center">
       <div className="hero-title col-md-12 col-lg-6">
         <h1 className="font-weight-bold">
-          Simply<span style={{ color: '#17A2B8' }}>Invoice</span>
+          Simply<span style={{ color: '#17A2B8' }}>Invoices</span>
         </h1>
         <p>
           The boring task of invoicing made easy! Signup to start simplifying

@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link to="/" className="navbar-brand font-weight-bold">
-        Simply<span className="info-color-span">Invoice</span>
+        Simply<span className="info-color-span">Invoices</span>
       </Link>
 
       <button

@@ -19,13 +19,13 @@ function App() {
   const {
     user: {
       email = '',
-      sub: userId,
+      sub: userId = '',
       nickname = '',
       name = '',
       picture = '',
     } = {},
   } = useAuth0()
-
+  console.log(useAuth0())
   //chech the database for the user id, if not in the database, add the user.
   useEffect(() => {
     if (userId) {
@@ -38,6 +38,7 @@ function App() {
               getInvoices(userId)
             })
         } else {
+          console.log(data)
           addUserToContext(data)
           getInvoices(userId)
         }
