@@ -132,7 +132,7 @@ const AppProvider = ({ children }: ProviderProp) => {
     if (userId) {
       try {
         const response = await fetch(
-          `https://simply-invoice-app.herokuapp.com/all/${userId}/?page=${page}&limit=8`
+          `https://simply-invoice-app.herokuapp.com/api/invoice/all/${userId}/?page=${page}&limit=8`
         )
         const data = await response.json()
         console.log(data)
