@@ -1,16 +1,14 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../Context'
-import { useAuth0 } from '@auth0/auth0-react'
 
-const Pagination: React.FC = () => {
-  //auth0 stuff. Grab userId from auth0
-  const { user: { sub: userId } = {} } = useAuth0()
+const Pagination: React.FC = (): JSX.Element => {
   const {
     getInvoices,
     amountOfPages,
     setCurrentPage,
     currentPage,
     setIsPaginationLoading,
+    userInfo: { userId },
   } = useContext(AppContext)
 
   //pagination logic

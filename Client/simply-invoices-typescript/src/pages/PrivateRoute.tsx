@@ -1,9 +1,11 @@
-import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
+import React, { useContext } from 'react'
 import LandingPage from './LandingPage'
+import { AppContext } from '../Context'
 
 const PrivateRoute: React.FC = ({ children }: any) => {
-  const { user } = useAuth0()
-  return user && Object.keys(user).length > 0 ? children : <LandingPage />
+  const {
+    userInfo: { userId },
+  } = useContext(AppContext)
+  return userId && userId ? children : <LandingPage />
 }
 export default PrivateRoute

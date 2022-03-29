@@ -22,15 +22,15 @@ const getUser = (req, res) => {
 }
 
 const addUser = (req, res) => {
-  const { email, userId } = req.body
+  const { email, userId, nickname, picture, name } = req.body
 
   db.getConnection((err, connection) => {
     if (err) throw err
     console.log('connected as id ' + connection.threadId)
 
     connection.query(
-      'INSERT INTO users (userId, email) VALUES (?, ?)',
-      [userId, email],
+      'INSERT INTO users (userId, email, nickname, picture, name) VALUES (?, ?, ?, ?, ?)',
+      [userId, email, nickname, picture, name],
       (err, result) => {
         if (err) console.log(err)
         else {

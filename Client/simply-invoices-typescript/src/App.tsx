@@ -16,14 +16,22 @@ function App() {
     useContext(AppContext)
 
   //auth0 stuff
-  const { user: { email = '', sub: userId = '' } = {} } = useAuth0()
+  const {
+    user: {
+      email = '',
+      sub: userId,
+      nickname = '',
+      name = '',
+      picture = '',
+    } = {},
+  } = useAuth0()
 
   //chech the database for the user id, if not in the database, add the user.
   useEffect(() => {
     if (userId) {
       checkIfUserExists(userId).then((data: UserInfoInterface) => {
-        if (Object.keys(data).length === 0) {
-          addUserToDb(email, userId)
+        if (!data) {
+          addUserToDb(email, userId, nickname, picture, name)
             .then(() => checkIfUserExists(userId))
             .then((data: UserInfoInterface) => {
               addUserToContext(data)

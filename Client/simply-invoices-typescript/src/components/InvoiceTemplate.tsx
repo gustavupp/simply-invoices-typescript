@@ -58,7 +58,7 @@ export function InvoiceTemplate() {
           <div className="invoice-company text-inverse f-w-600">
             {image ? (
               <img
-                src={`http://localhost:3001/${image}`}
+                src={`https://simply-invoice-app.herokuapp.com/${image}`}
                 alt="logo"
                 style={{ width: '150px', borderRadius: '10px' }}
               />

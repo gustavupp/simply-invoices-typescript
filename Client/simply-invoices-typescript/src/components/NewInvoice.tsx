@@ -7,12 +7,9 @@ import { AppContext } from '../Context'
 //libraries
 import { AiOutlineClose, AiFillEdit } from 'react-icons/ai'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useAuth0 } from '@auth0/auth0-react'
 
-export const NewInvoice: React.FC = () => {
+export const NewInvoice: React.FC = (): JSX.Element => {
   //const [theme, setTheme] = useState('info')
-  //auth0 stuff. Grab userId from auth0
-  const { user: { sub: userId } = {} } = useAuth0()
   let navigate = useNavigate()
 
   const {
@@ -27,6 +24,7 @@ export const NewInvoice: React.FC = () => {
     userInfo: {
       notes: userNotes = '',
       paymentDetails: userPaymentDetails = '',
+      userId = '',
     } = {},
   } = useContext(AppContext)
 
@@ -51,9 +49,9 @@ export const NewInvoice: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(0)
   const [rate, setRate] = useState<number>(0)
 
-  const [editingLineItemId, setEditingLineItemId] = useState<
-    number | null | string
-  >('')
+  const [editingLineItemId, setEditingLineItemId] = useState<number | null>(
+    null
+  )
   const [isEditingLineItem, setIsEditingLineItem] = useState<boolean>(false)
 
   //when component loads and the invoices array is not empty, look for the given id in the array and populate the fields
@@ -72,6 +70,7 @@ export const NewInvoice: React.FC = () => {
         notes,
       } = invoices.find((item: { invoiceId: number }) => {
         if (invoiceId) return item.invoiceId === parseInt(invoiceId)
+        else return 'invoice not found'
       })
       setSubtotal(subtotal)
       setInvoiceFrom(invoiceFrom)
@@ -262,7 +261,7 @@ export const NewInvoice: React.FC = () => {
             //if image variable is coming from db its value is a string(a path)
             src={
               typeof image === 'string'
-                ? `http://localhost:3001/${image}`
+                ? `https://simply-invoice-app.herokuapp.com/${image}`
                 : imageThumbnail
             }
             alt="invoice logo"

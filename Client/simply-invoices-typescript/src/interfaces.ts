@@ -1,5 +1,3 @@
-import { User } from '@auth0/auth0-react'
-
 //lineItems object Interface
 export interface lineItems {
   id: number
@@ -28,6 +26,9 @@ export interface Invoice {
 export interface UserInfoInterface {
   email: string
   mobile: string
+  picture?: string
+  nickname?: string
+  name?: string
   notes: string
   paymentDetails: string
   signUpDate: string
@@ -36,6 +37,7 @@ export interface UserInfoInterface {
 
 //State Interface
 export interface StateInterface {
+  isAuthenticated?: boolean
   invoices: Invoice[] | any[]
   isEditingInvoice: boolean
   userInfo: UserInfoInterface
@@ -50,7 +52,13 @@ export interface StateInterface {
   addUserToContext: (userData: UserInfoInterface) => void
   getUserFromDb: (userId: string) => void
   checkIfUserExists: (userId: string) => any
-  addUserToDb: (email: string, userId: string) => void | any
+  addUserToDb: (
+    email: string,
+    userId: string,
+    nickname: string,
+    picture: string,
+    name: string
+  ) => void | any
   postInvoiceToServer: (
     invoiceFrom: string,
     billTo: string,

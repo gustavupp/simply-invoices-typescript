@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { AppContext } from '../Context'
 import { AiFillEdit } from 'react-icons/ai'
 import { BiShowAlt } from 'react-icons/bi'
-import { useAuth0 } from '@auth0/auth0-react'
 import Pagination from '../components/Pagination'
 import Loading from '../components/Loading'
 
@@ -13,16 +12,14 @@ const MainPage: React.FC = (): JSX.Element => {
     setIsEditingInvoice,
     isPaginationLoading,
     totals: { fiscalYearTotal, globalTotal },
+    userInfo: { picture, nickname, userId },
   } = useContext(AppContext)
-
-  const { isAuthenticated, user: { picture = '', nickname = '' } = {} } =
-    useAuth0()
 
   if (isPaginationLoading) return <Loading />
 
   return (
     <main style={{ minHeight: '70vh' }} className="container my-5 ">
-      {isAuthenticated ? (
+      {userId ? (
         <div className=" d-flex align-items-center justify-content-start">
           <h5>Welcome {nickname} !</h5>
           <img

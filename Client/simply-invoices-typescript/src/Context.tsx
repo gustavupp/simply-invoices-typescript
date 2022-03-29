@@ -13,6 +13,8 @@ const intialState: StateInterface = {
   userInfo: {
     email: '',
     mobile: '',
+    picture: '',
+    nickname: '',
     notes: '',
     paymentDetails: '',
     signUpDate: '',
@@ -39,7 +41,13 @@ const intialState: StateInterface = {
   checkIfUserExists: function (userId: string) {
     throw new Error('Function not implemented.')
   },
-  addUserToDb: function (email: string, userId: string): Promise<any> {
+  addUserToDb: function (
+    email: string,
+    userId: string,
+    nickname: string,
+    picture: string,
+    name: string
+  ): Promise<any> {
     throw new Error('Function not implemented.')
   },
   postInvoiceToServer: function (
@@ -124,7 +132,7 @@ const AppProvider = ({ children }: ProviderProp) => {
     if (userId) {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/invoice/all/${userId}/?page=${page}&limit=8`
+          `https://simply-invoice-app.herokuapp.com/all/${userId}/?page=${page}&limit=8`
         )
         const data = await response.json()
         console.log(data)
@@ -176,7 +184,7 @@ const AppProvider = ({ children }: ProviderProp) => {
 
       try {
         const response = await fetch(
-          'http://localhost:3001/api/invoice/add',
+          'https://simply-invoice-app.herokuapp.com/api/invoice/add',
           options
         )
         const data = await response.json()
@@ -222,7 +230,7 @@ const AppProvider = ({ children }: ProviderProp) => {
       }
       try {
         const response = await fetch(
-          'http://localhost:3001/api/invoice/update',
+          'https://simply-invoice-app.herokuapp.com/api/invoice/update',
           options
         )
         const data = await response.json()
@@ -240,7 +248,7 @@ const AppProvider = ({ children }: ProviderProp) => {
     setIsInvoiceLoading(true)
     try {
       const response = await fetch(
-        `http://localhost:3001/api/invoice/${invoiceId}`,
+        `https://simply-invoice-app.herokuapp.com/api/invoice/${invoiceId}`,
         {
           method: 'delete',
         }
@@ -265,7 +273,9 @@ const AppProvider = ({ children }: ProviderProp) => {
   //check if user exists in the database
   const checkIfUserExists = async (userId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/user/${userId}`)
+      const response = await fetch(
+        `https://simply-invoice-app.herokuapp.com/api/user/${userId}`
+      )
       const data = await response.json()
       return data[0] //return the object inside the array only
     } catch (error) {
@@ -274,18 +284,24 @@ const AppProvider = ({ children }: ProviderProp) => {
   }
 
   //add user to db
-  const addUserToDb = async (email: string, userId: string) => {
+  const addUserToDb = async (
+    email: string,
+    userId: string,
+    nickname: string,
+    picture: string,
+    name: string
+  ) => {
     const options = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json;charset=UTF-8',
       },
-      body: JSON.stringify({ email, userId }),
+      body: JSON.stringify({ email, userId, nickname, picture, name }),
     }
     try {
       const response = await fetch(
-        'http://localhost:3001/api/user/add',
+        'https://simply-invoice-app.herokuapp.com/api/user/add',
         options
       )
       const data = await response.json()
@@ -298,7 +314,9 @@ const AppProvider = ({ children }: ProviderProp) => {
   //get user info from db
   const getUserFromDb = async (userId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/user/${userId}`)
+      const response = await fetch(
+        `https://simply-invoice-app.herokuapp.com/api/user/${userId}`
+      )
       const data = await response.json()
       dispatch({ type: 'ADD_USER_INFO', payload: data[0] })
       setIsUserSettingsLoading(false)
@@ -330,7 +348,7 @@ const AppProvider = ({ children }: ProviderProp) => {
 
     try {
       const response = await fetch(
-        'http://localhost:3001/api/user/update',
+        'https://simply-invoice-app.herokuapp.com/api/user/update',
         options
       )
       const data = await response.json()
