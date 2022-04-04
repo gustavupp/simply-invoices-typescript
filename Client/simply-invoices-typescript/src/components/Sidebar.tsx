@@ -8,14 +8,14 @@ import {
   FaSignOutAlt,
   FaAngleLeft,
 } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const Sidebar: React.FC = (): JSX.Element => {
+  let { pathname } = useLocation()
   const { isSidebarOpen } = useContext(AppContext)
   const [isSidebarClosed, setIsSidebarClosed] = useState<boolean>(true)
-  let n = useNavigate()
-  console.log(n)
+
   //auth0 stuff
   const { logout, loginWithRedirect, isAuthenticated } = useAuth0()
 
@@ -47,7 +47,14 @@ const Sidebar: React.FC = (): JSX.Element => {
         </div>
 
         <li className="nav-item active mb-2">
-          <Link to="/" className=" nav-link text-white ">
+          <Link
+            to="/"
+            className={
+              pathname === '/'
+                ? 'nav-link text-white activeLink'
+                : 'nav-link text-white'
+            }
+          >
             {isSidebarClosed ? (
               <div className="sidebar-links d-flex flex-column justify-content-center align-items-center">
                 <FaTachometerAlt className="icons" />
@@ -62,7 +69,14 @@ const Sidebar: React.FC = (): JSX.Element => {
         </li>
 
         <li className="nav-item active mb-2">
-          <Link to="/settings" className="nav-link text-white">
+          <Link
+            to="/settings"
+            className={
+              pathname === '/settings'
+                ? 'nav-link text-white activeLink'
+                : 'nav-link text-white'
+            }
+          >
             {isSidebarClosed ? (
               <div className="sidebar-links d-flex flex-column justify-content-center align-items-center">
                 <FaUser className="icons" />
