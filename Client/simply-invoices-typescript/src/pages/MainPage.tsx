@@ -90,13 +90,13 @@ const MainPage: React.FC = (): JSX.Element => {
                         <td className="text-center d-flex flex-direction-row ">
                           <Link
                             to={`/invoices/${invoiceId}`}
-                            className="btn btn-outline-info mr-2 mb-1 p-1"
+                            className="btn btn-sm btn-outline-success mr-1 p-1"
                           >
                             <BiShowAlt style={{ fontSize: '22px' }} />
                           </Link>
                           <Link
                             to={`/invoice/${invoiceId}`}
-                            className="btn btn-outline-info mr-2 mb-1 p-1"
+                            className="btn btn-sm btn-outline-light p-1"
                             onClick={() => setIsEditingInvoice(true)}
                           >
                             <AiFillEdit style={{ fontSize: '22px' }} />

@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   const {
     isSidebarOpen,
     setSidebarOpen,
-    userInfo: { picture, nickname, userId },
+    userInfo: { picture, nickname, name, userId },
   } = useContext(AppContext)
 
   return (
@@ -20,12 +20,12 @@ const Navbar: React.FC = () => {
 
       {userId ? (
         <div className=" d-flex align-items-center justify-content-start">
-          <small>Welcome {nickname}</small>
+          <small>{name || nickname}</small>
           <img
             src={picture}
             alt="profile"
             width="50px"
-            style={{ borderRadius: '50%', margin: '0 20px' }}
+            className="rounded-circle mx-3"
           />
         </div>
       ) : null}

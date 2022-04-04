@@ -233,7 +233,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
   }
 
   return (
-    <main className="newInvoice-container container my-4 py-3">
+    <main className="newInvoice-container container my-4 py-3 ">
       <form>
         <section className=" row mb-3">
           <div className="input-group col-sm-12 col-md-8">
@@ -352,7 +352,6 @@ export const NewInvoice: React.FC = (): JSX.Element => {
               <tr>
                 <td>
                   <input
-                    // style={{ width: '100%' }}
                     className="form-control bg-dark text-white w-100 "
                     type="text"
                     name="service"
@@ -364,7 +363,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                 <td>
                   <input
                     className="form-control bg-dark text-white"
-                    style={{ width: '50px' }}
+                    style={{ width: '60px' }}
                     type="number"
                     name="quantity"
                     value={quantity}
@@ -397,18 +396,20 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                       <td>{rate}</td>
                       <td>${lineItemTotal}</td>
                       <td>
-                        <button
-                          className="btn"
-                          onClick={(e) => editLineItem(e, id)}
-                        >
-                          <AiFillEdit />
-                        </button>
-                        <button
-                          className="btn"
-                          onClick={(e) => deleteLineItem(e, id)}
-                        >
-                          <AiOutlineClose />
-                        </button>
+                        <div className="d-flex flex-row">
+                          <button
+                            className="btn btn-sm btn-info mr-1"
+                            onClick={(e) => editLineItem(e, id)}
+                          >
+                            <AiFillEdit />
+                          </button>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={(e) => deleteLineItem(e, id)}
+                          >
+                            <AiOutlineClose />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )
@@ -465,7 +466,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
       </div>
 
       <div className="d-flex justify-content-between m-2">
-        <Link to="/" className="btn btn-outline-secondary">
+        <Link to="/" className="btn btn-outline-light">
           Back
         </Link>
 
@@ -482,7 +483,10 @@ export const NewInvoice: React.FC = (): JSX.Element => {
           Delete
         </button>
 
-        <button className="btn btn-outline-info" onClick={handleCreateOrSave}>
+        <button
+          className="btn btn-outline-success"
+          onClick={handleCreateOrSave}
+        >
           {isEditingInvoice ? 'Save Invoice' : 'Create Invoice'}
         </button>
       </div>

@@ -51,7 +51,7 @@ function App() {
       <PrivateRoute>
         <div className="d-flex">
           <Sidebar />
-          <div className="d-flex flex-column vw-100">
+          <div className="d-flex flex-column vw-100 min-vh-100">
             <Navbar />
             <Routes>
               <Route path="/" element={<MainPage />} />

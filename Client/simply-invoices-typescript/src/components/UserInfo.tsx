@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../Context'
 import Loading from './Loading'
+import '../styles/userInfo.scss'
 
-const UserInfo: React.FC = () => {
+const UserInfo: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
   const {
     userInfo: { email, mobile, notes, paymentDetails, signUpDate, userId },
@@ -29,7 +30,7 @@ const UserInfo: React.FC = () => {
   if (isUserSettingsLoading) return <Loading />
 
   return (
-    <main className="container my-5 py-3">
+    <main className="userInfo-container container my-5 py-3 bg-dark">
       <h3>User Default Settings</h3>
       <form>
         <section className="row my-5">
@@ -37,11 +38,11 @@ const UserInfo: React.FC = () => {
             <label htmlFor="id">User Id</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control bg-dark text-muted"
               id="id"
               name="id"
+              disabled
               value={id}
-              readOnly
             />
           </div>
           <div className="col-sm">
@@ -49,11 +50,11 @@ const UserInfo: React.FC = () => {
               <label htmlFor="userSignUpDate">Signed up on:</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control bg-dark text-muted"
                 id="userSignUpDate"
                 value={userSignUpDate}
+                disabled
                 name="userSignUpDate"
-                readOnly
               />
             </div>
           </div>
@@ -63,7 +64,7 @@ const UserInfo: React.FC = () => {
             <label htmlFor="mobile">Phone</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control bg-dark text-white"
               id="mobile"
               name="mobile"
               value={userMobile || ''}
@@ -76,11 +77,11 @@ const UserInfo: React.FC = () => {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                className="form-control"
+                className="form-control bg-dark text-muted"
+                disabled
                 id="email"
                 value={userEmail}
                 name="invoiceNumber"
-                readOnly
               />
             </div>
           </div>
@@ -90,7 +91,7 @@ const UserInfo: React.FC = () => {
           <div className="form-group col-sm">
             <label htmlFor="paymentDetails">Payment Details</label>
             <textarea
-              className="form-control"
+              className="form-control bg-dark text-white"
               id="paymentDetails"
               name="paymentDetails"
               value={userPaymentDetails || ''}
@@ -104,7 +105,7 @@ const UserInfo: React.FC = () => {
             <div className="form-group">
               <label htmlFor="notes">Notes</label>
               <textarea
-                className="form-control"
+                className="form-control bg-dark text-white"
                 name="notes"
                 id="notes"
                 value={userNotes || ''}
@@ -122,11 +123,11 @@ const UserInfo: React.FC = () => {
       </p>
 
       <div className="d-flex justify-content-between m-2">
-        <Link to="/" className="btn btn-info">
+        <Link to="/" className="btn btn-outline-light">
           Back
         </Link>
         <button
-          className="btn btn-success"
+          className="btn btn-outline-success"
           onClick={() => {
             updateUserSettings(
               userId,

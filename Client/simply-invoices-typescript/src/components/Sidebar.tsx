@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { AppContext } from '../Context'
 import '../styles/sidebar.scss'
 import {
@@ -8,27 +8,16 @@ import {
   FaSignOutAlt,
   FaAngleLeft,
 } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const Sidebar: React.FC = (): JSX.Element => {
-  const [winSize, setWinSize] = useState<number>(0)
   const { isSidebarOpen } = useContext(AppContext)
   const [isSidebarClosed, setIsSidebarClosed] = useState<boolean>(true)
-  const [skinnySidebar, setSkinnySidebar] = useState<boolean>(true)
+  let n = useNavigate()
+  console.log(n)
   //auth0 stuff
   const { logout, loginWithRedirect, isAuthenticated } = useAuth0()
-
-  const checkSize = () => {
-    setWinSize(window.innerWidth)
-    if (winSize < 768) setSkinnySidebar(true)
-    else setSkinnySidebar(false)
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', checkSize)
-    return () => window.removeEventListener('resize', checkSize)
-  })
 
   if (!isSidebarOpen) return <></>
 
@@ -45,27 +34,29 @@ const Sidebar: React.FC = (): JSX.Element => {
           <Link to="/" className="nav-link text-white">
             {isSidebarClosed ? (
               <>
-                S<span className="text-info">I</span>
+                <strong>
+                  S<span className="text-success">I</span>
+                </strong>
               </>
             ) : (
               <>
-                Simply<span className="text-info">Invoices</span>
+                Simply<span className="text-success">Invoices</span>
               </>
             )}
           </Link>
         </div>
 
         <li className="nav-item active mb-2">
-          <Link to="/" className="nav-link text-white ">
+          <Link to="/" className=" nav-link text-white ">
             {isSidebarClosed ? (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <FaTachometerAlt />
+              <div className="sidebar-links d-flex flex-column justify-content-center align-items-center">
+                <FaTachometerAlt className="icons" />
                 <small className="">Dash</small>
               </div>
             ) : (
-              <>
-                <FaTachometerAlt /> &nbsp; Dashboard
-              </>
+              <div className="sidebar-links">
+                <FaTachometerAlt className="icons" /> &nbsp; Dashboard
+              </div>
             )}
           </Link>
         </li>
@@ -73,14 +64,14 @@ const Sidebar: React.FC = (): JSX.Element => {
         <li className="nav-item active mb-2">
           <Link to="/settings" className="nav-link text-white">
             {isSidebarClosed ? (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <FaUser />
+              <div className="sidebar-links d-flex flex-column justify-content-center align-items-center">
+                <FaUser className="icons" />
                 <small className="">Settings</small>
               </div>
             ) : (
-              <>
-                <FaUser /> &nbsp; Settings
-              </>
+              <div className="sidebar-links">
+                <FaUser className="icons" /> &nbsp; Settings
+              </div>
             )}
           </Link>
         </li>
@@ -102,30 +93,32 @@ const Sidebar: React.FC = (): JSX.Element => {
               }
             >
               {isSidebarClosed ? (
-                <div className="d-flex flex-column justify-content-center align-items-center">
-                  <FaSignOutAlt />
+                <div className="sidebar-links d-flex flex-column justify-content-center align-items-center">
+                  <FaSignOutAlt className="icons" />
                   <small className="">Logout</small>
                 </div>
               ) : (
-                <>
-                  <FaSignOutAlt /> &nbsp; Logout
-                </>
+                <div className=" sidebar-links">
+                  <FaSignOutAlt className="icons" /> &nbsp; Logout
+                </div>
               )}
             </button>
           </div>
         </li>
       </ul>
 
-      {skinnySidebar ? null : (
-        <div className="text-center mt-5">
-          <button
-            className="btn btn-outline-info"
-            onClick={() => setIsSidebarClosed(!isSidebarClosed)}
-          >
-            {isSidebarClosed ? <FaAngleRight /> : <FaAngleLeft />}
-          </button>
-        </div>
-      )}
+      <div
+        className={
+          isSidebarClosed ? 'expand-btn text-center mt-5' : 'text-center mt-5'
+        }
+      >
+        <button
+          className="btn btn-outline-info"
+          onClick={() => setIsSidebarClosed(!isSidebarClosed)}
+        >
+          {isSidebarClosed ? <FaAngleRight /> : <FaAngleLeft />}
+        </button>
+      </div>
     </aside>
   )
 }
