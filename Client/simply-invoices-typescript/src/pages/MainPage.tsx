@@ -17,7 +17,7 @@ const MainPage: React.FC = (): JSX.Element => {
   if (isPaginationLoading) return <Loading />
 
   return (
-    <main style={{ minHeight: '70vh' }} className="container my-5 ">
+    <main style={{ minHeight: '70vh' }} className="container my-5 min-vh-100">
       {/* ************TOTALS TABLE******** */}
       <div
         style={{ borderRadius: '10px' }}
@@ -26,12 +26,12 @@ const MainPage: React.FC = (): JSX.Element => {
         <table
           style={{ borderRadius: '10px' }}
           // className={`table table-invoice table-${theme}`}
-          className="table table-sm table-invoice table-info"
+          className="table table-sm table-invoice table-dark"
         >
           <thead className="thead-dark">
             <tr>
-              <th className="text-center">GLOBAL TOTAL</th>
-              <th className="text-center">FISCAL YEAR TOTAL</th>
+              <th className="text-center">Global Total</th>
+              <th className="text-center">Fiscal Year Total</th>
             </tr>
           </thead>
 
@@ -54,29 +54,24 @@ const MainPage: React.FC = (): JSX.Element => {
           <table
             style={{ borderRadius: '10px' }}
             //className={`table table-invoice table-${theme}`}
-            className="table table-sm table-invoice table-info"
+            className="table table-sm table-invoice table-dark table table-striped"
           >
             <thead className="thead-dark">
               <tr>
                 <th scope="col" className="text-center">
-                  No.
+                  №
                 </th>
                 <th scope="col" className="text-center">
-                  FROM
-                </th>
-                <th scope="col" className="text-center">
-                  TO
+                  Bill To
                 </th>
 
                 <th scope="col" className="text-center">
-                  TOTAL
+                  Total
                 </th>
                 <th scope="col" className="text-center">
-                  DATE
+                  Date
                 </th>
-                <th scope="col" className="text-center">
-                  VIEW | EDIT
-                </th>
+                <th scope="col" className="text-center"></th>
               </tr>
             </thead>
             <tbody>
@@ -84,32 +79,24 @@ const MainPage: React.FC = (): JSX.Element => {
                 //this built in method assigns a key to every child
                 React.Children.toArray(
                   invoices.map((item) => {
-                    const {
-                      billTo,
-                      invoiceFrom,
-                      invoiceNumber,
-                      subtotal,
-                      date,
-                      invoiceId,
-                    } = item
+                    const { billTo, invoiceNumber, subtotal, date, invoiceId } =
+                      item
                     return (
                       <tr>
-                        <td className="text-center">#{invoiceNumber}</td>
-                        <td className="text-center">{invoiceFrom}</td>
+                        <td className="text-center">{invoiceNumber}</td>
                         <td className="text-center">{billTo}</td>
-
                         <td className="text-center">${subtotal}</td>
                         <td className="text-center">{date}</td>
-                        <td className="text-center">
+                        <td className="text-center d-flex flex-direction-row ">
                           <Link
                             to={`/invoices/${invoiceId}`}
-                            className="btn btn-primary mr-2 mb-1 p-1"
+                            className="btn btn-outline-info mr-2 mb-1 p-1"
                           >
                             <BiShowAlt style={{ fontSize: '22px' }} />
                           </Link>
                           <Link
                             to={`/invoice/${invoiceId}`}
-                            className="btn btn-info mr-2 mb-1 p-1"
+                            className="btn btn-outline-info mr-2 mb-1 p-1"
                             onClick={() => setIsEditingInvoice(true)}
                           >
                             <AiFillEdit style={{ fontSize: '22px' }} />
@@ -134,7 +121,7 @@ const MainPage: React.FC = (): JSX.Element => {
       <Link
         to="/invoice/new"
         type="button"
-        className="btn btn-info"
+        className="btn btn-outline-light"
         onClick={() => setIsEditingInvoice(false)}
       >
         New Invoice

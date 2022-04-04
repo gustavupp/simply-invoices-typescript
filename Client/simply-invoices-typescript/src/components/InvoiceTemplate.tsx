@@ -163,11 +163,11 @@ export function InvoiceTemplate() {
         </div>
         <br />
         <div className="d-flex justify-content-between">
-          <Link to="/" className="btn btn-secondary mx-2">
+          <Link to="/" className="btn btn-outline-light mx-2">
             Back
           </Link>
           <button
-            className="btn btn-info mx-2"
+            className="btn btn-outline-light mx-2"
             onClick={() => downloadInvoice(invoiceNumber, invoice.current)}
           >
             <FaDownload /> Download

@@ -8,6 +8,8 @@ import { AppContext } from '../Context'
 import { AiOutlineClose, AiFillEdit } from 'react-icons/ai'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 
+import '../styles/newInvoice.scss'
+
 export const NewInvoice: React.FC = (): JSX.Element => {
   //const [theme, setTheme] = useState('info')
   let navigate = useNavigate()
@@ -231,7 +233,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
   }
 
   return (
-    <main className="container my-5 py-3">
+    <main className="newInvoice-container container my-4 py-3">
       <form>
         <section className=" row mb-3">
           <div className="input-group col-sm-12 col-md-8">
@@ -248,7 +250,10 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                 onChange={(e) => loadImageFile(e)}
               />
 
-              <label className="custom-file-label" htmlFor="file">
+              <label
+                className="custom-file-label bg-dark text-white"
+                htmlFor="file"
+              >
                 Choose Logo Image
               </label>
             </div>
@@ -276,7 +281,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
             <label htmlFor="invoiceFrom">From</label>
             <input
               type="text"
-              className="form-control "
+              className="form-control bg-dark text-white"
               id="invoiceFrom"
               name="invoiceFrom"
               value={invoiceFrom}
@@ -288,7 +293,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
             <label htmlFor="billTo">Bill To</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control bg-dark text-white"
               id="billTo"
               name="billTo"
               value={billTo}
@@ -301,7 +306,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
               <label htmlFor="number">Invoice Nº</label>
               <input
                 type="number"
-                className="form-control"
+                className="form-control bg-dark text-white"
                 id="number"
                 name="invoiceNumber"
                 value={invoiceNumber}
@@ -318,7 +323,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
               <label htmlFor="date">Date</label>
               <input
                 type="date"
-                className="form-control"
+                className="form-control bg-dark text-white"
                 id="date"
                 name="date"
                 value={date}
@@ -331,7 +336,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
         <section style={{ borderRadius: '10px' }} className="table-responsive">
           <table
             style={{ borderRadius: '10px' }}
-            className="table table-info"
+            className="table table-sm table-dark table-striped"
             //className={`table table-${theme}`}
           >
             <thead className="thead-dark">
@@ -347,7 +352,8 @@ export const NewInvoice: React.FC = (): JSX.Element => {
               <tr>
                 <td>
                   <input
-                    style={{ width: '100%' }}
+                    // style={{ width: '100%' }}
+                    className="form-control bg-dark text-white w-100 "
                     type="text"
                     name="service"
                     value={service}
@@ -357,6 +363,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                 </td>
                 <td>
                   <input
+                    className="form-control bg-dark text-white"
                     style={{ width: '50px' }}
                     type="number"
                     name="quantity"
@@ -367,6 +374,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                 </td>
                 <td>
                   <input
+                    className="form-control bg-dark text-white"
                     style={{ width: '70px' }}
                     type="number"
                     name="rate"
@@ -376,6 +384,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
                   />
                 </td>
                 <td>${lineItemTotal}</td>
+                <td></td>
               </tr>
 
               {lineItems &&
@@ -410,7 +419,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
 
         {
           <button
-            className="btn btn-info mr-3"
+            className="btn btn-sm btn-outline-info"
             type="button"
             id="btn"
             onClick={addLineItem}
@@ -423,7 +432,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
           <div className="form-group col-sm">
             <label htmlFor="paymentDetails">Payment Details</label>
             <textarea
-              className="form-control"
+              className="form-control bg-dark text-white"
               id="paymentDetails"
               name="paymentDetails"
               rows={4}
@@ -437,7 +446,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
             <div className="form-group">
               <label htmlFor="notes">Notes</label>
               <textarea
-                className="form-control"
+                className="form-control bg-dark text-white"
                 name="notes"
                 id="notes"
                 rows={4}
@@ -456,7 +465,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
       </div>
 
       <div className="d-flex justify-content-between m-2">
-        <Link to="/" className="btn btn-secondary">
+        <Link to="/" className="btn btn-outline-secondary">
           Back
         </Link>
 
@@ -473,7 +482,7 @@ export const NewInvoice: React.FC = (): JSX.Element => {
           Delete
         </button>
 
-        <button className="btn btn-info" onClick={handleCreateOrSave}>
+        <button className="btn btn-outline-info" onClick={handleCreateOrSave}>
           {isEditingInvoice ? 'Save Invoice' : 'Create Invoice'}
         </button>
       </div>

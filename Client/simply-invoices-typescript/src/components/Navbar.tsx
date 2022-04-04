@@ -10,22 +10,22 @@ const Navbar: React.FC = () => {
   } = useContext(AppContext)
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light shadow-sm p-3 bg-white rounded d-flex justify-content-between">
+    <nav className="navbar navbar-expand-lg navbar-light p-3 d-flex justify-content-between">
       <button
-        className="btn btn-muted"
+        className="btn btn-outline-info"
         onClick={() => setSidebarOpen(!isSidebarOpen)}
       >
-        <span className="navbar-toggler-icon "></span>
+        <span className="navbar-toggler-icon"></span>
       </button>
 
       {userId ? (
         <div className=" d-flex align-items-center justify-content-start">
-          <span>Welcome {nickname} !</span>
+          <small>Welcome {nickname}</small>
           <img
             src={picture}
             alt="profile"
             width="50px"
-            style={{ borderRadius: '50%', margin: '0 25px' }}
+            style={{ borderRadius: '50%', margin: '0 20px' }}
           />
         </div>
       ) : null}

@@ -36,8 +36,8 @@ const Sidebar: React.FC = (): JSX.Element => {
     <aside
       className={
         isSidebarClosed
-          ? 'min-vh-100 bg-dark text-center'
-          : 'min-vh-100 bg-dark min-vw-25'
+          ? 'min-vh-100 bg-dark text-center mr-2'
+          : 'min-vh-100 bg-dark min-vw-25 mr-2'
       }
     >
       <ul>

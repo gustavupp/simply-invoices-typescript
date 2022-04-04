@@ -22,7 +22,7 @@ const Pagination: React.FC = (): JSX.Element => {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <nav aria-label="Page navigation ">
+      <nav aria-label="Page navigation">
         <ul className="pagination">
           <li
             className={
@@ -32,7 +32,7 @@ const Pagination: React.FC = (): JSX.Element => {
               currentPage + 1 > 1 ? handleClick(currentPage - 1) : null
             }
           >
-            <button className="page-link" aria-label="Previous">
+            <button className="page-link bg-dark" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               <span className="sr-only">Previous</span>
             </button>
@@ -47,7 +47,7 @@ const Pagination: React.FC = (): JSX.Element => {
                 key={index}
               >
                 <button
-                  className="page-link"
+                  className="page-link text-white bg-dark"
                   onClick={() => handleClick(index)}
                 >
                   {index + 1}
@@ -67,7 +67,7 @@ const Pagination: React.FC = (): JSX.Element => {
                 : null
             }
           >
-            <button className="page-link" aria-label="Next">
+            <button className="page-link bg-dark" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
               <span className="sr-only">Next</span>
             </button>
