@@ -26,6 +26,7 @@ const intialState: StateInterface = {
   amountOfPages: 0,
   totals: { fiscalYearTotal: 0, globalTotal: 0 },
   currentPage: 0,
+  isSidebarOpen: true,
   setIsEditingInvoice: function (trueOrFalse: boolean): void {
     throw new Error('Function not implemented.')
   },
@@ -102,12 +103,20 @@ const intialState: StateInterface = {
   setCurrentPage: function (pageIndex: number): void {
     throw new Error('Function not implemented.')
   },
+  setSidebarOpen: function (trueOrFalse: boolean): void {
+    throw new Error('Function not implemented.')
+  },
 }
 
 const AppContext = React.createContext<StateInterface>(intialState)
 
 const AppProvider = ({ children }: ProviderProp) => {
   const [state, dispatch] = useReducer(reducer, intialState)
+
+  /********************************SIDEBAR*****************************************/
+  const setSidebarOpen = (trueOrFalse: boolean) => {
+    dispatch({ type: 'SET_SIDEBAR', payload: trueOrFalse })
+  }
 
   /********************************PAGINATION*****************************************/
   const setIsPaginationLoading = (trueOrFalse: boolean) => {
@@ -377,6 +386,7 @@ const AppProvider = ({ children }: ProviderProp) => {
         setIsUserSettingsLoading,
         setIsPaginationLoading,
         setCurrentPage,
+        setSidebarOpen,
       }}
     >
       {children}

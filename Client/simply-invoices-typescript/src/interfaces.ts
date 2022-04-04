@@ -47,6 +47,7 @@ export interface StateInterface {
   amountOfPages: number
   totals: { fiscalYearTotal: number; globalTotal: number }
   currentPage: number
+  isSidebarOpen: boolean
   setIsEditingInvoice: (trueOrFalse: boolean) => void
   getInvoices: (userId: string, page?: number) => Promise<any>
   addUserToContext: (userData: UserInfoInterface) => void
@@ -95,6 +96,7 @@ export interface StateInterface {
   setIsUserSettingsLoading: (trueOrFalse: boolean) => void
   setIsPaginationLoading: (trueOrFalse: boolean) => void
   setCurrentPage: (pageIndex: number) => void
+  setSidebarOpen: (trueOrFalse: boolean) => void
 }
 
 //actions
@@ -111,3 +113,4 @@ export type Actions =
   | { type: 'SET_INVOICES'; payload: Invoice[] }
   | { type: 'ADD_USER_INFO'; payload: UserInfoInterface }
   | { type: 'SET_IS_USER_SETTINGS_LOADING'; payload: boolean }
+  | { type: 'SET_SIDEBAR'; payload: boolean }

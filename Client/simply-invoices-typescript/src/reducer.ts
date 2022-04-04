@@ -29,6 +29,9 @@ export const reducer = (state: any, action: Actions) => {
     case 'SET_CURRENT_PAGE_INDEX':
       return { ...state, currentPage: action.payload }
 
+    case 'SET_SIDEBAR':
+      return { ...state, isSidebarOpen: action.payload }
+
     default:
       return state
   }

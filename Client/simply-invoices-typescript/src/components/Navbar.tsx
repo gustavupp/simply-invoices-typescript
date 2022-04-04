@@ -1,57 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useAuth0 } from '@auth0/auth0-react'
+import React, { useContext } from 'react'
 import '../styles/navbar.scss'
+import { AppContext } from '../Context'
 
 const Navbar: React.FC = () => {
-  //auth0 stuff
-  const { logout, loginWithRedirect, isAuthenticated } = useAuth0()
+  const {
+    isSidebarOpen,
+    setSidebarOpen,
+    userInfo: { picture, nickname, userId },
+  } = useContext(AppContext)
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <Link to="/" className="navbar-brand font-weight-bold">
-        Simply<span className="info-color-span">Invoices</span>
-      </Link>
-
+    <nav className="navbar navbar-expand-lg navbar-light shadow-sm p-3 bg-white rounded d-flex justify-content-between">
       <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+        className="btn btn-muted"
+        onClick={() => setSidebarOpen(!isSidebarOpen)}
       >
-        <span className="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon "></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        {isAuthenticated ? (
-          <ul className="navbar-nav">
-            <li className="mr-1 nav-item">
-              <Link to="/" className="nav-link">
-                Dashboard
-              </Link>
-            </li>
 
-            <li className="mr-1 nav-item">
-              <Link to="/settings" className="nav-link">
-                Settings
-              </Link>
-            </li>
-          </ul>
-        ) : null}
-
-        <button
-          className="login-btn nav-link btn btn-info"
-          onClick={
-            isAuthenticated
-              ? () => logout({ returnTo: window.location.origin })
-              : loginWithRedirect
-          }
-        >
-          {isAuthenticated ? 'Logout' : 'Login'}
-        </button>
-      </div>
+      {userId ? (
+        <div className=" d-flex align-items-center justify-content-start">
+          <span>Welcome {nickname} !</span>
+          <img
+            src={picture}
+            alt="profile"
+            width="50px"
+            style={{ borderRadius: '50%', margin: '0 25px' }}
+          />
+        </div>
+      ) : null}
     </nav>
   )
 }

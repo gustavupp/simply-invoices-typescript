@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { InvoiceTemplate } from './components/InvoiceTemplate'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Sidebar from './components/Sidebar'
 import MainPage from './pages/MainPage'
 import NewInvoicePage from './pages/NewInvoicePage'
 import UserSettingsPage from './pages/UserSettingsPage'
@@ -25,8 +25,8 @@ function App() {
       picture = '',
     } = {},
   } = useAuth0()
-  console.log(useAuth0())
-  //chech the database for the user id, if not in the database, add the user.
+
+  //check the database for the user id, if not in the database, add the user.
   useEffect(() => {
     if (userId) {
       checkIfUserExists(userId).then((data: UserInfoInterface) => {
@@ -38,7 +38,6 @@ function App() {
               getInvoices(userId)
             })
         } else {
-          console.log(data)
           addUserToContext(data)
           getInvoices(userId)
         }
@@ -49,23 +48,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <MainPage />
-            </PrivateRoute>
-          }
-        />
-
-        <Route path="/invoice/:invoiceId" element={<NewInvoicePage />} />
-        <Route path="/invoice/new" element={<NewInvoicePage />} />
-        <Route path="/invoices/:invoiceId" element={<InvoiceTemplate />} />
-        <Route path="/settings" element={<UserSettingsPage />} />
-      </Routes>
-      <Footer />
+      <PrivateRoute>
+        <div className="d-flex">
+          <Sidebar />
+          <div className="d-flex flex-column vw-100">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/invoice/:invoiceId" element={<NewInvoicePage />} />
+              <Route path="/invoice/new" element={<NewInvoicePage />} />
+              <Route
+                path="/invoices/:invoiceId"
+                element={<InvoiceTemplate />}
+              />
+              <Route path="/settings" element={<UserSettingsPage />} />
+            </Routes>
+          </div>
+        </div>
+      </PrivateRoute>
     </BrowserRouter>
   )
 }

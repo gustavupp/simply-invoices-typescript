@@ -12,25 +12,12 @@ const MainPage: React.FC = (): JSX.Element => {
     setIsEditingInvoice,
     isPaginationLoading,
     totals: { fiscalYearTotal, globalTotal },
-    userInfo: { picture, nickname, userId },
   } = useContext(AppContext)
 
   if (isPaginationLoading) return <Loading />
 
   return (
     <main style={{ minHeight: '70vh' }} className="container my-5 ">
-      {userId ? (
-        <div className=" d-flex align-items-center justify-content-start">
-          <h5>Welcome {nickname} !</h5>
-          <img
-            src={picture}
-            alt="profile"
-            width="50px"
-            style={{ borderRadius: '50%', margin: '0 25px' }}
-          />
-        </div>
-      ) : null}
-
       {/* ************TOTALS TABLE******** */}
       <div
         style={{ borderRadius: '10px' }}
